@@ -1,0 +1,46 @@
+
+table {
+    margin: auto;
+    /*font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;*/
+    text-align: center;
+    border: 1px solid gray;
+}
+
+td {   
+    padding: 5px;
+    height: 20px;
+    width: 20px;
+}
+
+.white {
+    background-color: white;
+}
+
+.yellow {
+    background-color: #f4f740;
+}
+
+.cyan {
+    background-color: #00E4FF;
+}
+
+.red {
+    background-color: #F60000;
+}
+
+.green {
+    background-color: #69B625;
+}
+
+.orange {
+    background-color: #FF8D00;
+}
+
+.pink {
+    background-color: #FF51BC;
+}
+
+.violet {
+    background-color: #9F0096;
+}
