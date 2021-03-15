@@ -1,5 +1,6 @@
 const pieces = new Array();
 const pieces_color = [
+    "white",
     "yellow",
     "cyan",
     "red",
@@ -9,9 +10,7 @@ const pieces_color = [
     "violet"
 ]
 
-pieces[0] =
-    [[1, 1],
-    [1, 1]];
+pieces[0] = [0];
 
 pieces[1] =
     [[2],
@@ -37,12 +36,13 @@ pieces[5] =
     [0, 6],
     [6, 6]];
 
-pieces[6] =
+/*pieces[6] =
     [[7, 7, 7],
-    [0, 7, 0]];
+    [0, 7, 0],
+    [7, 7, 0]];*/
 
 function getRamdomPiece() {
-    let index = Math.floor(Math.random() * (pieces.length - 0)) + 0;
+    let index = Math.floor(Math.random() * (pieces.length - 1)) + 1;
 
     return pieces[index];
 }

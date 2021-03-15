@@ -1,236 +1,169 @@
-import { pieces, pieces_color, getRamdomPiece } from './modules/pieces.js'
-import { rows, colums, velocity } from './modules/config.js'
+import * as _pieces from './modules/pieces.js'
+import * as _config from './modules/config.js'
 
-var board = new Array(rows);
-var board2 = new Array(rows);
+var _board = new Array(_config.rows);
 
-var pivotR = 0;
-var pivotC = 0;
+var _pivotR = 0;
+var _pivotC = 0;
 
-var actualPiece;
+var _piece;
 
-for (let r = 0; r < rows; r++) {
-    board[r] = new Array(colums).fill(0);
-    board2[r] = new Array(colums).fill(0);
+for (let r = 0; r < _config.rows; r++) {
+    _board[r] = new Array(_config.colums).fill(0);
 }
 
-createTable(rows, colums);
-insertNewPiece();
-
-//nuevaPieza()
-// intervalID = window.setInterval(miFuncion, 1000, 'asd', 'Parametro 2');
-
-function deleteCompleteRows() {
-    
-    
-    for (let r = 0; r < rows; r++) {
-        let sum = 1;
-
-        board[r].reduce((a, curr) => {
-            if (curr < 0) {
-                sum++
-            }
-        })
-
-        if (sum == colums) {
-            board.splice(r, 1);
-            board.splice(0, 0, new Array(colums).fill(0));
-        }
-    }
-}
-
-function copyArray(array1, array2) {
-    for (let r = 0; r < array1.length; r++) {
-        for (let c = 0; c < array1[0].length; c++) {
-            array1[r][c] = array2[r][c];
-        };
-    }
-}
-
-function rotate(arr) {
-    let array2 = new Array(arr[0].length)
-
-    for (let i = 0; i < arr[0].length; i++) {
-        array2[i] = new Array(arr.length - 1);
-
-        let jj = 0;
-
-        for (let j = (arr.length - 1); j >= 0; j--) {
-            array2[i][jj] = arr[j][i];
-            jj++;
-        };
-    }
-
-    return array2;
-}
+createTable(_config.rows, _config.colums);
+insertNewPiecedAndPaintBoard();
 
 document.onkeydown = checkKey;
+
+var _intervalID = window.setInterval(move, _config.initialVelocity, 'down');
 
 function checkKey(e) {
     e = e || window.event;
 
-    if (e.keyCode == '38') {
-        tryRotate();
-    }
-    else if (e.keyCode == '40') {
-        move("down");
-    }
-    else if (e.keyCode == '37') {
-        move("left");
-    }
-    else if (e.keyCode == '39') {
-        move("right");
+    switch (e.keyCode) {
+        case 37: { move("left"); break; }
+        case 38: { rotatePiece(); break; }
+        case 39: { move("right"); break; }
+        case 40: { move("down"); break; }
     }
 }
 
 function move(action) {
-    copyArray(board2, board)
+    let result = true;
+    movePivot(action, 1);
 
-    if (tryMove(action)) {
-        copyArray(board, board2);
-
-        renderBoard();
+    if (tryMove(_board, _pivotR, _pivotC, _piece)) {
+        movePivot(action, -1);
+        removePieceFromTheFromBorad(_board, _pivotR, _pivotC, _piece);
+        movePivot(action, 1);
+        result = insertPieceOnBorad(_board, _pivotR, _pivotC, _piece);
+        paintBoard();
+    } else {
+        movePivot(action, -1);
 
         if (action == 'down') {
-            pivotR++;
-        } else if (action == 'left') {
-            pivotC--;
-        } else if (action == 'right') {
-            pivotC++;
+            stickUpPiece(_board, _pivotR, _pivotC, _piece);
+            findCompletedRowsFromTheBoardAndClean(_board);
+            result = insertNewPiecedAndPaintBoard();
         }
-    } else if (action == 'down') {
-        for (let c = 0; c < actualPiece[0].length; c++) {
-            for (let r = 0; r < actualPiece.length; r++) {
-                if (actualPiece[r][c] > 0)
-                    board[pivotR + r][pivotC + c] = -1 * actualPiece[r][c];
-            }
-        }
+    }
 
-        deleteCompleteRows();
-        insertNewPiece();
+    if (!result) endGame();
+}
+
+function movePivot(action, sum) {
+    switch (action) {
+        case 'down': { _pivotR += sum; break; }
+        case 'left': { _pivotC -= sum; break; }
+        case 'right': { _pivotC += sum; break; }
     }
 }
 
-function tryMove(action) {
-    let pivotC2 = pivotC;
-    let pivotR2 = pivotR;
-
-    for (let r = 0; r < actualPiece.length; r++) {
-        for (let c = 0; c < actualPiece[0].length; c++) {
-            if (board2[r + pivotR][c + pivotC] >= 0)
-                board2[r + pivotR][c + pivotC] = 0;
-        };
-    }
-
-    switch (action) {
-        case 'down': {
-            pivotR2++;
-            break;
-        }
-        case 'left': {
-            pivotC2--;
-            break;
-        }
-        case 'right': {
-            pivotC2++;
-            break;
-        }
-        default: return false;
-    }
-
-    for (let r = actualPiece.length - 1; r >= 0; r--) {
-        for (let c = actualPiece[0].length - 1; c >= 0; c--) {
-            if (pivotC2 >= 0 &&
-                pivotR2 < rows &&
-                (pivotC2 + actualPiece[0].length - 1) < colums &&
-                (pivotR2 + actualPiece.length - 1) < rows) {
-                if (board2[r + pivotR2][c + pivotC2] == 0) {
-                    board2[r + pivotR2][c + pivotC2] = actualPiece[r][c];
-                } else if (board2[r + pivotR2][c + pivotC2] < 0 && actualPiece[r][c] == 0) {
-                    continue;
-                } else {
+function tryMove(board, pivotR, pivotC, piece) {
+    try {
+        for (let r = 0; r < piece.length; r++) {
+            for (let c = 0; c < piece[0].length; c++) {
+                if (piece[r][c] > 0 && (board[r + pivotR][c + pivotC] < 0 | board[r + pivotR][c + pivotC] == undefined))
                     return false;
-                }
             }
-            else {
-                return false;
-            }
+        }
+        return true;
+    } catch (Exception) {
+        return false;
+    }
+}
+
+function stickUpPiece(board, pivotR, pivotC, piece) {
+    return modPieceFromTheFromBorad(board, pivotR, pivotC, piece, -1);
+}
+
+function insertPieceOnBorad(board, pivotR, pivotC, piece) {
+    return modPieceFromTheFromBorad(board, pivotR, pivotC, piece, 1);
+}
+
+function removePieceFromTheFromBorad(board, pivotR, pivotC, piece) {
+    return modPieceFromTheFromBorad(board, pivotR, pivotC, piece, 0);
+}
+
+function modPieceFromTheFromBorad(board, pivotR, pivotC, piece, op) {
+    for (let r = 0; r < piece.length; r++) {
+        for (let c = 0; c < piece[0].length; c++) {
+            if (piece[r][c] > 0)
+                if (board[r + pivotR][c + pivotC] < 0)
+                    return false; // end game
+                else
+                    board[r + pivotR][c + pivotC] = piece[r][c] * op;
         }
     }
 
     return true;
 }
 
-function tryRotate() {
-    let simulationResult = true;
+function rotatePiece() {
+    let array = rotateArray(_piece);
 
-    let piece2 = rotate(actualPiece);
+    if (tryMove(_board, _pivotR, _pivotC, array)) {
+        removePieceFromTheFromBorad(_board, _pivotR, _pivotC, _piece);
+        _piece = array;
+        let result = insertPieceOnBorad(_board, _pivotR, _pivotC, _piece);
+        paintBoard();
 
-    copyArray(board2, board);
+        if (!result) endGame();
+    }
+}
 
-    for (let r = 0; r < actualPiece.length; r++) {
-        for (let c = 0; c < actualPiece[0].length; c++) {
-            board2[r + pivotR][c + pivotC] = 0;
+function rotateArray(arr) {
+    let arr2 = new Array(arr[0].length)
+
+    for (let r = 0; r < arr[0].length; r++) {
+        arr2[r] = new Array(arr.length - 1);
+        for (let c = 0; c < arr.length; c++) {
+            arr2[r][c] = arr[(arr.length - 1 - c)][r];
         };
     }
 
-    for (let r = 0; r < actualPiece.length; r++) {
-        for (let c = 0; c < actualPiece[0].length; c++) {
-            if (c + pivotR <= (rows - 1) && r + pivotC <= (colums - 1) && board2[c + pivotR][r + pivotC] == 0) {
-                board2[c + pivotR][r + pivotC] = piece2[c][r];
-            } else {
-                simulationResult = false;
-                break;
-            }
+    return arr2;
+}
+
+function insertNewPiecedAndPaintBoard() {
+    _piece = _pieces.getRamdomPiece();
+    _pivotR = 0;
+    _pivotC = (Math.floor(_config.colums / 2) - Math.floor(_piece[0].length / 2));
+
+    if (_piece[0].length % 2 != 0 && _config.colums % 2 == 0) _pivotC--;
+
+    let result = insertPieceOnBorad(_board, _pivotR, _pivotC, _piece);
+
+    paintBoard();
+
+    return result;
+}
+
+function findCompletedRowsFromTheBoardAndClean(board) {
+    let completedRows = 0;
+
+    for (let r = 0; r < board.length; r++) {
+        if (board[r].every((currentValue) => currentValue < 0)) {
+            _board.splice(r, 1);
+            _board.splice(0, 0, new Array(_config.colums).fill(0));
+            completedRows++;
         }
     }
 
-    if (simulationResult) {
-        actualPiece = piece2.slice();
-        copyArray(board, board2);
-
-        renderBoard();
-    }
+    return completedRows;
 }
 
-
-function miFuncion(a, b) {
-    move("down");
-
-    // window.clearInterval(intervalID);
+function endGame() {
+    clearInterval(_intervalID);
+    alert("END GAME");
 }
 
-function insertNewPiece() {
-    actualPiece = getRamdomPiece();
-
-    pivotC = (Math.floor(colums / 2) - Math.floor(actualPiece[0].length / 2));
-    pivotR = 0;
-
-    if (actualPiece[0].length % 2 != 0 && colums % 2 == 0)
-        pivotC--;
-
-    for (let c = 0; c < actualPiece[0].length; c++) {
-        for (let r = 0; r < actualPiece.length; r++) {
-            board[r][pivotC + c] = actualPiece[r][c]
-        }
-    }
-
-    renderBoard();
-}
-
-function renderBoard() {
-    for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < colums; c++) {
-            switch (Math.abs(board[r][c])) {
-                case 0: {
-                    document.getElementById('td' + (colums * r + c)).className = "white";
-                    break;
-                }
-                default: {
-                    document.getElementById('td' + (colums * r + c)).className = pieces_color[Math.abs(board[r][c]) - 1];
-                    break;
-                }
-            }
+function paintBoard() {
+    for (let r = 0; r < _config.rows; r++) {
+        for (let c = 0; c < _config.colums; c++) {
+            document.getElementById('td' + (_config.colums * r + c)).className = _pieces.pieces_color[Math.abs(_board[r][c])]
         }
     }
 }

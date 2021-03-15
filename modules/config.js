@@ -1,5 +1,5 @@
-const rows = 15;
+const rows = 20;
 const colums = 10;
-const velocity = 1000;
+const initialVelocity = 300;
 
-export {rows, colums, velocity}
+export {rows, colums, initialVelocity}
