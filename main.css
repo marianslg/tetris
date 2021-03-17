@@ -1,20 +1,6 @@
-
-table {
-    margin: auto;
-    /*font-family: 'Courier New', Courier, monospace;
-    font-weight: bold;*/
-    text-align: center;
-    border: 1px solid gray;
-}
-
-td {   
-    padding: 5px;
-    height: 20px;
-    width: 20px;
-}
-
+/* pieces background colors*/
 .white {
-    background-color: white;
+    background-color: #f6f6f6;
 }
 
 .yellow {
@@ -43,4 +29,93 @@ td {
 
 .violet {
     background-color: #9F0096;
+}
+
+/* index style*/
+div.init-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+}
+
+div.main-title {
+    font-family: 'VT323', monospace;
+    text-align: center;
+    font-size: 50px;
+    padding: 10px;
+}
+
+div.container-button {
+    position: relative;
+    padding: 10px;
+    text-align: center;
+}
+
+button.button-play {
+    font-family: 'Roboto Mono', monospace;
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    letter-spacing: 2px;
+}
+
+button.button-play:hover {
+    font-family: 'Roboto Mono', monospace;
+    border: none;
+    cursor: pointer;
+}
+
+/* board and panel styles*/
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    display: inline;
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin: auto;
+    position: relative;
+    left: 0;
+    top: 0;
+}
+
+td {
+    border: 1px solid white;
+    width: 5vh;
+}
+
+tr {
+    height: 5vh;
+}
+
+div.board-container {
+    visibility: hidden;
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+div.board {
+    position: relative;
+    left: 0;
+    top: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+div.panel {
+    border-spacing: 0;
+    border-collapse: collapse;
+    display: inline;
 }

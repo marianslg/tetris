@@ -6,14 +6,30 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Tetrix</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@600&display=swap" rel="stylesheet">
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
     <script type="module" src='./main.js'></script>
 </head>
 
 
 <body>
-    <div class="board" onload="init()">        
+    <div class="board-container" id="board-container">
+        <div class="board" id="board">
+            <div class="panel">
+                SCORE: 123564
+            </div>
+        </div>
+    </div>
 
+    <div class="init-container" id="init-container">
+        <div class="main-title">
+            TETRISCRIPT
+        </div>
+        <div class="container-button">
+            <button class="button-play" id="but-startGame">PLAY</button>
+        </div>
     </div>
 </body>
 

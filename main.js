@@ -2,22 +2,30 @@ import * as _pieces from './modules/pieces.js'
 import * as _config from './modules/config.js'
 
 var _board = new Array(_config.rows);
-
 var _pivotR = 0;
 var _pivotC = 0;
-
+var _intervalID = 0;
 var _piece;
 
-for (let r = 0; r < _config.rows; r++) {
-    _board[r] = new Array(_config.colums).fill(0);
+document.getElementById("but-startGame").onclick = startGame;
+
+function startGame() {
+   
+    document.getElementById("init-container").style.visibility= "hidden"
+
+    for (let r = 0; r < _config.rows; r++) {
+        _board[r] = new Array(_config.colums).fill(0);
+    }
+    
+    createTable(_config.rows, _config.colums);
+    document.getElementById("board-container").style.visibility = 'visible';
+
+    insertNewPiecedAndPaintBoard();
+    
+    document.onkeydown = checkKey;
+    
+    _intervalID = window.setInterval(move, _config.initialVelocity, 'down');
 }
-
-createTable(_config.rows, _config.colums);
-insertNewPiecedAndPaintBoard();
-
-document.onkeydown = checkKey;
-
-var _intervalID = window.setInterval(move, _config.initialVelocity, 'down');
 
 function checkKey(e) {
     e = e || window.event;
@@ -169,6 +177,8 @@ function paintBoard() {
 }
 
 function createTable(rows, colums) {
+    var myDiv = document.getElementById("board");
+    
     var table = document.createElement('table');
 
     for (let r = 0; r < rows; r++) {
@@ -182,5 +192,5 @@ function createTable(rows, colums) {
         table.appendChild(row);
     }
 
-    document.body.appendChild(table);
+    myDiv.prepend(table);
 }
