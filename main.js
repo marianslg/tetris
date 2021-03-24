@@ -10,12 +10,14 @@ var _nextPiece;
 var _score = 0;
 var _velocity = _config.initialVelocity;
 
-
 document.getElementById("but-startGame").onclick = startGame;
 document.getElementById("but-up").onclick = function () { action(38); };
 document.getElementById("but-left").onclick = function () { action(37); };
 document.getElementById("but-right").onclick = function () { action(39); };
 document.getElementById("but-down").onclick = function () { action(40); };
+
+document.body.addEventListener("touchstart", startTouch, false);
+document.body.addEventListener("touchend", endTouch, false);
 
 function startGame() {
     document.getElementById("index-container").style.visibility = "hidden"
@@ -41,7 +43,6 @@ function checkKey(e) {
 }
 
 function action(e) {
-    console.log(e)
     switch (e) {
         case 37: { move("left"); break; }
         case 38: { rotatePiece(); break; }
@@ -148,7 +149,7 @@ function rotateArray(arr) {
 }
 
 function insertNewPiecedAndPaintBoard() {
-    _piece = _pieces.getPiece(_nextPiece[0].filter(aa => aa> 0)[0] - 1);
+    _piece = _pieces.getPiece(_nextPiece[0].filter(aa => aa > 0)[0] - 1);
     _nextPiece = _pieces.getRamdomPiece();
 
     paintNextPiece();
@@ -166,9 +167,9 @@ function insertNewPiecedAndPaintBoard() {
 }
 
 function paintNextPiece() {
-    for (let r = 0; r < 3; r++) {
-        for (let c = 0; c < 4; c++) {
-            document.getElementById('panel-next-' + (3 * r + c)).className = _pieces.pieces_color[0]
+    for (let r = 0; r < 4; r++) {
+        for (let c = 0; c < 3; c++) {
+            document.getElementById('panel-next-' + (3 * r + c)).className = _pieces.pieces_color[0];
         }
     }
 
@@ -194,7 +195,7 @@ function findCompletedRowsFromTheBoardAndClean(board) {
 
             _config.initialVelocity;
 
-            if (score % 10 == 0) {
+            if (_score % 10 == 0) {
                 _velocity -= _config.acceleration;
                 _intervalID = window.setInterval(move, _velocity, 'down');
             }
@@ -239,3 +240,49 @@ function reziseTable() {
 reziseTable();
 
 window.addEventListener('resize', reziseTable);
+
+/* touch events */
+
+var initialX = null;
+var initialY = null;
+
+function startTouch(e) {
+    if(e.path[0].className != "panel-but") {
+        initialX = e.touches[0].clientX;
+        initialY = e.touches[0].clientY;
+    }
+};
+
+function endTouch(e) {
+    if (initialX === null | initialY === null) {
+        return;
+    }
+
+    let currentX = e.changedTouches[0].clientX;
+    let currentY = e.changedTouches[0].clientY;
+
+    let diffX = initialX - currentX;
+    let diffY = initialY - currentY;
+
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX > 0) {
+            action(37);
+        } else {
+            action(39);
+        }
+    } else if (Math.abs(diffX) < Math.abs(diffY)) {
+        if (diffY > 0) {
+            // console.log("swiped up");
+        } else {
+            action(40);
+        }
+    }
+    else {
+        action(38);
+    }
+
+    initialX = null;
+    initialY = null;
+
+    e.preventDefault();
+};
