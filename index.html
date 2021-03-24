@@ -4,7 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Tetrix</title>
+    <title>T E T R I S C R I P T</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
@@ -15,15 +15,289 @@
 
 
 <body>
-    <div class="board-container" id="board-container">
-        <div class="board" id="board">
-            <div class="panel">
-                SCORE: 123564
-            </div>
-        </div>
-    </div>
+    <table class="board" id="tableId">
+        <tr>
+            <td id="board-td-0" class="white"></td>
+            <td id="board-td-1" class="white"></td>
+            <td id="board-td-2" class="white"></td>
+            <td id="board-td-3" class="white"></td>
+            <td id="board-td-4" class="white"></td>
+            <td id="board-td-5" class="white"></td>
+            <td id="board-td-6" class="white"></td>
+            <td id="board-td-7" class="white"></td>
+            <td id="board-td-8" class="white"></td>
+            <td id="board-td-9" class="white"></td>
+            <td class="panel" id="panel-score-title" colspan="3">SCORE</td>
+        </tr>
+        <tr>
+            <td id="board-td-10" class="white"></td>
+            <td id="board-td-11" class="white"></td>
+            <td id="board-td-12" class="white"></td>
+            <td id="board-td-13" class="white"></td>
+            <td id="board-td-14" class="white"></td>
+            <td id="board-td-15" class="white"></td>
+            <td id="board-td-16" class="white"></td>
+            <td id="board-td-17" class="white"></td>
+            <td id="board-td-18" class="white"></td>
+            <td id="board-td-19" class="white"></td>
+            <td class="panel" id="panel-score-value" colspan="3">0</td>
+        </tr>
+        <tr>
+            <td id="board-td-20" class="white"></td>
+            <td id="board-td-21" class="white"></td>
+            <td id="board-td-22" class="white"></td>
+            <td id="board-td-23" class="white"></td>
+            <td id="board-td-24" class="white"></td>
+            <td id="board-td-25" class="white"></td>
+            <td id="board-td-26" class="white"></td>
+            <td id="board-td-27" class="white"></td>
+            <td id="board-td-28" class="white"></td>
+            <td id="board-td-29" class="white"></td>
+            <td class="panel" colspan="3"></td>
+        </tr>
+        <tr>
+            <td id="board-td-30" class="white"></td>
+            <td id="board-td-31" class="white"></td>
+            <td id="board-td-32" class="white"></td>
+            <td id="board-td-33" class="white"></td>
+            <td id="board-td-34" class="white"></td>
+            <td id="board-td-35" class="white"></td>
+            <td id="board-td-36" class="white"></td>
+            <td id="board-td-37" class="white"></td>
+            <td id="board-td-38" class="white"></td>
+            <td id="board-td-39" class="white"></td>
+            <td class="panel" colspan="3"></td>
+        </tr>
+        <tr>
+            <td id="board-td-40" class="white"></td>
+            <td id="board-td-41" class="white"></td>
+            <td id="board-td-42" class="white"></td>
+            <td id="board-td-43" class="white"></td>
+            <td id="board-td-44" class="white"></td>
+            <td id="board-td-45" class="white"></td>
+            <td id="board-td-46" class="white"></td>
+            <td id="board-td-47" class="white"></td>
+            <td id="board-td-48" class="white"></td>
+            <td id="board-td-49" class="white"></td>
+            <td class="panel" id="panel-next-title" colspan="3"> NEXT </td>
+        </tr>
+        <tr>
+            <td id="board-td-50" class="white"></td>
+            <td id="board-td-51" class="white"></td>
+            <td id="board-td-52" class="white"></td>
+            <td id="board-td-53" class="white"></td>
+            <td id="board-td-54" class="white"></td>
+            <td id="board-td-55" class="white"></td>
+            <td id="board-td-56" class="white"></td>
+            <td id="board-td-57" class="white"></td>
+            <td id="board-td-58" class="white"></td>
+            <td id="board-td-59" class="white"></td>
+            <td class="panel" id="panel-next-0"></td>
+            <td class="panel" id="panel-next-1"></td>
+            <td class="panel" id="panel-next-2"></td>
+        </tr>
+        <tr>
+            <td id="board-td-60" class="white"></td>
+            <td id="board-td-61" class="white"></td>
+            <td id="board-td-62" class="white"></td>
+            <td id="board-td-63" class="white"></td>
+            <td id="board-td-64" class="white"></td>
+            <td id="board-td-65" class="white"></td>
+            <td id="board-td-66" class="white"></td>
+            <td id="board-td-67" class="white"></td>
+            <td id="board-td-68" class="white"></td>
+            <td id="board-td-69" class="white"></td>
+            <td class="panel" id="panel-next-3"></td>
+            <td class="panel" id="panel-next-4"></td>
+            <td class="panel" id="panel-next-5"></td>
+            </td>
+        </tr>
+        <tr>
+            <td id="board-td-70" class="white"></td>
+            <td id="board-td-71" class="white"></td>
+            <td id="board-td-72" class="white"></td>
+            <td id="board-td-73" class="white"></td>
+            <td id="board-td-74" class="white"></td>
+            <td id="board-td-75" class="white"></td>
+            <td id="board-td-76" class="white"></td>
+            <td id="board-td-77" class="white"></td>
+            <td id="board-td-78" class="white"></td>
+            <td id="board-td-79" class="white"></td>
+            <td class="panel" id="panel-next-6"></td>
+            <td class="panel" id="panel-next-7"></td>
+            <td class="panel" id="panel-next-8"></td>
+            </td>
+        </tr>
+        <tr>
+            <td id="board-td-80" class="white"></td>
+            <td id="board-td-81" class="white"></td>
+            <td id="board-td-82" class="white"></td>
+            <td id="board-td-83" class="white"></td>
+            <td id="board-td-84" class="white"></td>
+            <td id="board-td-85" class="white"></td>
+            <td id="board-td-86" class="white"></td>
+            <td id="board-td-87" class="white"></td>
+            <td id="board-td-88" class="white"></td>
+            <td id="board-td-89" class="white"></td>
+            <td class="panel" id="panel-next-9"></td>
+            <td class="panel" id="panel-next-10"></td>
+            <td class="panel" id="panel-next-11"></td>
+            </td>
+        </tr>
+        <tr>
+            <td id="board-td-90" class="white"></td>
+            <td id="board-td-91" class="white"></td>
+            <td id="board-td-92" class="white"></td>
+            <td id="board-td-93" class="white"></td>
+            <td id="board-td-94" class="white"></td>
+            <td id="board-td-95" class="white"></td>
+            <td id="board-td-96" class="white"></td>
+            <td id="board-td-97" class="white"></td>
+            <td id="board-td-98" class="white"></td>
+            <td id="board-td-99" class="white"></td>
+            <td class="panel" id="panel-td-1" colspan="3"></td>
+        </tr>
+        <tr>
+            <td id="board-td-100" class="white"></td>
+            <td id="board-td-101" class="white"></td>
+            <td id="board-td-102" class="white"></td>
+            <td id="board-td-103" class="white"></td>
+            <td id="board-td-104" class="white"></td>
+            <td id="board-td-105" class="white"></td>
+            <td id="board-td-106" class="white"></td>
+            <td id="board-td-107" class="white"></td>
+            <td id="board-td-108" class="white"></td>
+            <td id="board-td-109" class="white"></td>
+            <td class="panel" colspan="3"></td>
+        </tr>
+        <tr>
+            <td id="board-td-110" class="white"></td>
+            <td id="board-td-111" class="white"></td>
+            <td id="board-td-112" class="white"></td>
+            <td id="board-td-113" class="white"></td>
+            <td id="board-td-114" class="white"></td>
+            <td id="board-td-115" class="white"></td>
+            <td id="board-td-116" class="white"></td>
+            <td id="board-td-117" class="white"></td>
+            <td id="board-td-118" class="white"></td>
+            <td id="board-td-119" class="white"></td>
+            <td class="panel" colspan="3"></td>
+        </tr>
+        <tr>
+            <td id="board-td-120" class="white"></td>
+            <td id="board-td-121" class="white"></td>
+            <td id="board-td-122" class="white"></td>
+            <td id="board-td-123" class="white"></td>
+            <td id="board-td-124" class="white"></td>
+            <td id="board-td-125" class="white"></td>
+            <td id="board-td-126" class="white"></td>
+            <td id="board-td-127" class="white"></td>
+            <td id="board-td-128" class="white"></td>
+            <td id="board-td-129" class="white"></td>
+            <td class="panel" colspan="3"></td>
+        </tr>
+        <tr>
+            <td id="board-td-130" class="white"></td>
+            <td id="board-td-131" class="white"></td>
+            <td id="board-td-132" class="white"></td>
+            <td id="board-td-133" class="white"></td>
+            <td id="board-td-134" class="white"></td>
+            <td id="board-td-135" class="white"></td>
+            <td id="board-td-136" class="white"></td>
+            <td id="board-td-137" class="white"></td>
+            <td id="board-td-138" class="white"></td>
+            <td id="board-td-139" class="white"></td>
+            <td class="panel" colspan="3"></td>
+        </tr>
+        <tr>
+            <td id="board-td-140" class="white"></td>
+            <td id="board-td-141" class="white"></td>
+            <td id="board-td-142" class="white"></td>
+            <td id="board-td-143" class="white"></td>
+            <td id="board-td-144" class="white"></td>
+            <td id="board-td-145" class="white"></td>
+            <td id="board-td-146" class="white"></td>
+            <td id="board-td-147" class="white"></td>
+            <td id="board-td-148" class="white"></td>
+            <td id="board-td-149" class="white"></td>
+            <td class="panel" colspan="3"></td>
+        </tr>
+        <tr>
+            <td id="board-td-150" class="white"></td>
+            <td id="board-td-151" class="white"></td>
+            <td id="board-td-152" class="white"></td>
+            <td id="board-td-153" class="white"></td>
+            <td id="board-td-154" class="white"></td>
+            <td id="board-td-155" class="white"></td>
+            <td id="board-td-156" class="white"></td>
+            <td id="board-td-157" class="white"></td>
+            <td id="board-td-158" class="white"></td>
+            <td id="board-td-159" class="white"></td>
+            <td class="panel" colspan="3"></td>
+        </tr>
+        <tr>
+            <td id="board-td-160" class="white"></td>
+            <td id="board-td-161" class="white"></td>
+            <td id="board-td-162" class="white"></td>
+            <td id="board-td-163" class="white"></td>
+            <td id="board-td-164" class="white"></td>
+            <td id="board-td-165" class="white"></td>
+            <td id="board-td-166" class="white"></td>
+            <td id="board-td-167" class="white"></td>
+            <td id="board-td-168" class="white"></td>
+            <td id="board-td-169" class="white"></td>
+            <td class="panel" colspan="3"></td>
+        </tr>
+        <tr>
+            <td id="board-td-170" class="white"></td>
+            <td id="board-td-171" class="white"></td>
+            <td id="board-td-172" class="white"></td>
+            <td id="board-td-173" class="white"></td>
+            <td id="board-td-174" class="white"></td>
+            <td id="board-td-175" class="white"></td>
+            <td id="board-td-176" class="white"></td>
+            <td id="board-td-177" class="white"></td>
+            <td id="board-td-178" class="white"></td>
+            <td id="board-td-179" class="white"></td>
+            <td class="panel"></td>
+            <td class="panel"><button class="panel-but" id="but-up">▲</button></td>
+            <td class="panel"></td>
+        </tr>
+        <tr>
+            <td id="board-td-180" class="white"></td>
+            <td id="board-td-181" class="white"></td>
+            <td id="board-td-182" class="white"></td>
+            <td id="board-td-183" class="white"></td>
+            <td id="board-td-184" class="white"></td>
+            <td id="board-td-185" class="white"></td>
+            <td id="board-td-186" class="white"></td>
+            <td id="board-td-187" class="white"></td>
+            <td id="board-td-188" class="white"></td>
+            <td id="board-td-189" class="white"></td>
+            <td class="panel"><button class="panel-but" id="but-left">◀</button>
+            </td>
+            <td class="panel" id="nextpiece-td-1"></td>
+            <td class="panel"><button class="panel-but" id="but-right">▶</button>
+            </td>
+        </tr>
+        <tr>
+            <td id="board-td-190" class="white"></td>
+            <td id="board-td-191" class="white"></td>
+            <td id="board-td-192" class="white"></td>
+            <td id="board-td-193" class="white"></td>
+            <td id="board-td-194" class="white"></td>
+            <td id="board-td-195" class="white"></td>
+            <td id="board-td-196" class="white"></td>
+            <td id="board-td-197" class="white"></td>
+            <td id="board-td-198" class="white"></td>
+            <td id="board-td-199" class="white"></td>
+            <td class="panel"></td>
+            <td class="panel"><button class="panel-but" id="but-down">▼</button></td>
+            <td class="panel"> </td>
+        </tr>
+    </table>
 
-    <div class="init-container" id="init-container">
+    <div class="index-container" id="index-container">
         <div class="main-title">
             TETRISCRIPT
         </div>

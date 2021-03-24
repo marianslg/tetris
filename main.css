@@ -1,4 +1,5 @@
 /* pieces background colors*/
+
 .white {
     background-color: #f6f6f6;
 }
@@ -31,8 +32,10 @@
     background-color: #9F0096;
 }
 
-/* index style*/
-div.init-container {
+/* index style */
+
+div.index-container {
+    visibility: visible;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -44,7 +47,7 @@ div.main-title {
     font-family: 'VT323', monospace;
     text-align: center;
     font-size: 50px;
-    padding: 10px;
+    /*padding: 10px;*/
 }
 
 div.container-button {
@@ -74,48 +77,67 @@ button.button-play:hover {
 /* board and panel styles*/
 
 body {
-    margin: 0;
-    padding: 0;
+    padding: 0px;
+    margin: 0px;
 }
 
-table {
-    display: inline;
+table.board {
+    visibility: hidden;
     border-spacing: 0;
     border-collapse: collapse;
+    height: var(--height);
+    width: var(--width);
+    text-align: center;
     margin: auto;
-    position: relative;
-    left: 0;
-    top: 0;
+    border: 1px double grey;
+}
+
+td.panel {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 4vh;
+}
+
+#panel-next-0 #panel-next-1 #panel-next-2 #panel-next-3 #panel-next-4 #panel-next-5 #panel-next-6 #panel-next-7 #panel-next-9 #panel-next-10 #panel-next-11{
+    background-color: #f6f6f6;
+}
+
+#panel-score-value {
+    font-size: 3vh;
 }
 
 td {
     border: 1px solid white;
-    width: 5vh;
+    width: calc(100%/13);
+    line-height: 0px;
 }
 
-tr {
-    height: 5vh;
+button.panel-but {
+    font-size: 3vh;
+    background-color: white;
+    border: none;
+    text-decoration: none;
+    padding: 0px;
+    margin: 0px;
+    height: 100%;
+    width: 100%;
+    line-height: 0px;
+    cursor: pointer;
+    outline: none;
 }
 
-div.board-container {
-    visibility: hidden;
-    margin: auto;
-    width: fit-content;
-    height: fit-content;
-    border-spacing: 0;
-    border-collapse: collapse;
+button.panel-but:active {
+    color: white;
+    transition: all 0.2s;
 }
 
-div.board {
-    position: relative;
-    left: 0;
-    top: 0;
-    border-spacing: 0;
-    border-collapse: collapse;
+td:nth-child(10) {
+    border-right: 1px solid grey;
 }
 
-div.panel {
-    border-spacing: 0;
-    border-collapse: collapse;
-    display: inline;
+tr:nth-child(1) {
+    border-top: 1px double grey;
+}
+
+tr:nth-child(20) {
+    border-bottom: 1px double grey;
 }

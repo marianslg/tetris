@@ -47,4 +47,9 @@ function getRamdomPiece() {
     return pieces[index];
 }
 
-export { pieces_color, getRamdomPiece };
+function getPiece(index) {
+    return pieces[index];
+}
+
+
+export { pieces_color, getRamdomPiece, getPiece };

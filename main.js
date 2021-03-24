@@ -6,31 +6,43 @@ var _pivotR = 0;
 var _pivotC = 0;
 var _intervalID = 0;
 var _piece;
+var _nextPiece;
+var _score = 0;
+var _velocity = _config.initialVelocity;
+
 
 document.getElementById("but-startGame").onclick = startGame;
+document.getElementById("but-up").onclick = function () { action(38); };
+document.getElementById("but-left").onclick = function () { action(37); };
+document.getElementById("but-right").onclick = function () { action(39); };
+document.getElementById("but-down").onclick = function () { action(40); };
 
 function startGame() {
-   
-    document.getElementById("init-container").style.visibility= "hidden"
+    document.getElementById("index-container").style.visibility = "hidden"
 
     for (let r = 0; r < _config.rows; r++) {
         _board[r] = new Array(_config.colums).fill(0);
     }
-    
-    createTable(_config.rows, _config.colums);
-    document.getElementById("board-container").style.visibility = 'visible';
 
+    document.getElementById("tableId").style.visibility = 'visible';
+
+    _nextPiece = _pieces.getRamdomPiece();
     insertNewPiecedAndPaintBoard();
-    
+
     document.onkeydown = checkKey;
-    
+
     _intervalID = window.setInterval(move, _config.initialVelocity, 'down');
 }
 
 function checkKey(e) {
     e = e || window.event;
 
-    switch (e.keyCode) {
+    action(e.keyCode);
+}
+
+function action(e) {
+    console.log(e)
+    switch (e) {
         case 37: { move("left"); break; }
         case 38: { rotatePiece(); break; }
         case 39: { move("right"); break; }
@@ -136,7 +148,11 @@ function rotateArray(arr) {
 }
 
 function insertNewPiecedAndPaintBoard() {
-    _piece = _pieces.getRamdomPiece();
+    _piece = _pieces.getPiece(_nextPiece[0].filter(aa => aa> 0)[0] - 1);
+    _nextPiece = _pieces.getRamdomPiece();
+
+    paintNextPiece();
+
     _pivotR = 0;
     _pivotC = (Math.floor(_config.colums / 2) - Math.floor(_piece[0].length / 2));
 
@@ -149,6 +165,20 @@ function insertNewPiecedAndPaintBoard() {
     return result;
 }
 
+function paintNextPiece() {
+    for (let r = 0; r < 3; r++) {
+        for (let c = 0; c < 4; c++) {
+            document.getElementById('panel-next-' + (3 * r + c)).className = _pieces.pieces_color[0]
+        }
+    }
+
+    for (let r = 0; r < _nextPiece.length; r++) {
+        for (let c = 0; c < _nextPiece[r].length; c++) {
+            document.getElementById('panel-next-' + (3 * r + c)).className = _pieces.pieces_color[Math.abs(_nextPiece[r][c])]
+        }
+    }
+}
+
 function findCompletedRowsFromTheBoardAndClean(board) {
     let completedRows = 0;
 
@@ -157,6 +187,19 @@ function findCompletedRowsFromTheBoardAndClean(board) {
             _board.splice(r, 1);
             _board.splice(0, 0, new Array(_config.colums).fill(0));
             completedRows++;
+
+            _score += completedRows;
+
+            document.getElementById('panel-score-value').textContent = _score;
+
+            _config.initialVelocity;
+
+            if (score % 10 == 0) {
+                _velocity -= _config.acceleration;
+                _intervalID = window.setInterval(move, _velocity, 'down');
+            }
+
+
         }
     }
 
@@ -171,26 +214,28 @@ function endGame() {
 function paintBoard() {
     for (let r = 0; r < _config.rows; r++) {
         for (let c = 0; c < _config.colums; c++) {
-            document.getElementById('td' + (_config.colums * r + c)).className = _pieces.pieces_color[Math.abs(_board[r][c])]
+            document.getElementById('board-td-' + (_config.colums * r + c)).className = _pieces.pieces_color[Math.abs(_board[r][c])]
         }
     }
 }
 
-function createTable(rows, colums) {
-    var myDiv = document.getElementById("board");
-    
-    var table = document.createElement('table');
+function reziseTable() {
+    let he = 0;
+    let wi = 0;
 
-    for (let r = 0; r < rows; r++) {
-        var row = document.createElement('tr');
-
-        for (let c = 0; c < colums; c++) {
-            var cell = document.createElement('td');
-            cell.id = 'td' + (colums * r + c)
-            row.appendChild(cell);
-        }
-        table.appendChild(row);
+    if ((window.innerWidth / 13) < (window.innerHeight / 20)) {
+        wi = innerWidth;
+        he = (innerWidth / 13) * 20
+    }
+    else {
+        wi = (innerHeight / 20) * 13;
+        he = innerHeight;
     }
 
-    myDiv.prepend(table);
+    document.documentElement.style.setProperty('--height', he * 0.99 + 'px');
+    document.documentElement.style.setProperty('--width', wi * 0.99 + 'px');
 }
+
+reziseTable();
+
+window.addEventListener('resize', reziseTable);
