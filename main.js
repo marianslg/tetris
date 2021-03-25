@@ -206,7 +206,7 @@ function findCompletedRowsFromTheBoardAndClean(board) {
 
             if (_lines % _config.linesStage == 0) {
                 _stage++;
-                document.getElementById('panel-stage-value').textContent = _stage;                
+                document.getElementById('panel-stage-value').textContent = _stage;
                 _velocity -= _config.acceleration;
                 clearInterval(_intervalID);
                 _intervalID = window.setInterval(move, _velocity, 'down');
@@ -274,8 +274,8 @@ function endTouch(e) {
 
     let diffX = initialX - currentX;
     let diffY = initialY - currentY;
-
-    if (Math.abs(diffX) - Math.abs(diffY) < 10) {
+    
+    if (Math.abs(Math.abs(diffX) - Math.abs(diffY)) < 10) {
         action(38); //touch - rotate
     } else if (Math.abs(diffX) > Math.abs(diffY)) {
         if (diffX > 0) {
