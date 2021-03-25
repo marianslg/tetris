@@ -3,6 +3,6 @@
 Another tetris game developed in JS :bowtie:
 
 ## Features
-* Pure javascript. :heart:
+* Pure javascript :heart:
 * Resposive! :fire:
-* Keyboard or touchscrem controls. :+1:
+* Keyboard or touch controls :+1:
