@@ -9,6 +9,7 @@ var _piece;
 var _nextPiece;
 var _score = 0;
 var _velocity = _config.initialVelocity;
+var _endGame = false;
 
 document.getElementById("but-startGame").onclick = startGame;
 document.getElementById("but-up").onclick = function () { action(38); };
@@ -43,6 +44,8 @@ function checkKey(e) {
 }
 
 function action(e) {
+    if (_endGame) return;
+
     switch (e) {
         case 37: { move("left"); break; }
         case 38: { rotatePiece(); break; }
@@ -52,14 +55,13 @@ function action(e) {
 }
 
 function move(action) {
-    let result = true;
     movePivot(action, 1);
 
     if (tryMove(_board, _pivotR, _pivotC, _piece)) {
         movePivot(action, -1);
         removePieceFromTheFromBorad(_board, _pivotR, _pivotC, _piece);
         movePivot(action, 1);
-        result = insertPieceOnBorad(_board, _pivotR, _pivotC, _piece);
+        _endGame = !insertPieceOnBorad(_board, _pivotR, _pivotC, _piece);
         paintBoard();
     } else {
         movePivot(action, -1);
@@ -67,11 +69,11 @@ function move(action) {
         if (action == 'down') {
             stickUpPiece(_board, _pivotR, _pivotC, _piece);
             findCompletedRowsFromTheBoardAndClean(_board);
-            result = insertNewPiecedAndPaintBoard();
+            _endGame = !insertNewPiecedAndPaintBoard();
         }
     }
 
-    if (!result) endGame();
+    if (_endGame) endGame();
 }
 
 function movePivot(action, sum) {
@@ -185,8 +187,11 @@ function findCompletedRowsFromTheBoardAndClean(board) {
 
     for (let r = 0; r < board.length; r++) {
         if (board[r].every((currentValue) => currentValue < 0)) {
+            console.log(_board)
             _board.splice(r, 1);
+            console.log(_board)
             _board.splice(0, 0, new Array(_config.colums).fill(0));
+            console.log(_board)
             completedRows++;
 
             _score += completedRows;
@@ -199,8 +204,6 @@ function findCompletedRowsFromTheBoardAndClean(board) {
                 _velocity -= _config.acceleration;
                 _intervalID = window.setInterval(move, _velocity, 'down');
             }
-
-
         }
     }
 
@@ -247,7 +250,7 @@ var initialX = null;
 var initialY = null;
 
 function startTouch(e) {
-    if(e.path[0].className != "panel-but") {
+    if (e.path[0].className != "panel-but") {
         initialX = e.touches[0].clientX;
         initialY = e.touches[0].clientY;
     }
@@ -264,21 +267,23 @@ function endTouch(e) {
     let diffX = initialX - currentX;
     let diffY = initialY - currentY;
 
-    if (Math.abs(diffX) > Math.abs(diffY)) {
+    console.log(Math.abs(diffX) - Math.abs(diffY))
+
+    if (Math.abs(diffX) - Math.abs(diffY) < 10) {
+        action(38); //touch - rotate
+        console.log("rotete");
+    } else if (Math.abs(diffX) > Math.abs(diffY)) {
         if (diffX > 0) {
-            action(37);
+            action(37); //left
         } else {
-            action(39);
+            action(39); //right
         }
     } else if (Math.abs(diffX) < Math.abs(diffY)) {
         if (diffY > 0) {
-            // console.log("swiped up");
+            //up
         } else {
-            action(40);
+            action(40); //down
         }
-    }
-    else {
-        action(38);
     }
 
     initialX = null;
