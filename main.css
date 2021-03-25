@@ -5,7 +5,7 @@
 }
 
 .yellow {
-    background-color: #f4f740;
+    background-color: #F7E021;
 }
 
 .cyan {
@@ -98,9 +98,9 @@ td.panel {
     text-shadow: 1px 1px gray;
 }
 
-#panel-next-0, #panel-next-1, #panel-next-2, #panel-next-3, #panel-next-4, #panel-next-5, #panel-next-6, #panel-next-7, #panel-next-9, #panel-next-10, #panel-next-11{
+/*#panel-next-0, #panel-next-1, #panel-next-2, #panel-next-3, #panel-next-4, #panel-next-5, #panel-next-6, #panel-next-7, #panel-next-9, #panel-next-10, #panel-next-11{
     background-color: #f6f6f6;
-}
+}*/
 
 #panel-score-value, #panel-stage-value {
     font-size: 3vh;

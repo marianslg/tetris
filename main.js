@@ -7,7 +7,7 @@ var _pivotC = 0;
 var _intervalID = 0;
 var _piece;
 var _nextPiece;
-var _score = 0;
+var _lines = 0;
 var _velocity = _config.initialVelocity;
 var _endGame = false;
 var _stage = 0;
@@ -158,7 +158,7 @@ function rotateArray(arr) {
 }
 
 function insertNewPiecedAndPaintBoard() {
-    _piece = _pieces.getPiece(_nextPiece[0].filter(aa => aa > 0)[0] - 1);
+    _piece = _pieces.getPiece(_nextPiece[0].filter(aa => aa > 0)[0]);
     _nextPiece = _pieces.getRamdomPiece();
 
     paintNextPiece();
@@ -198,16 +198,17 @@ function findCompletedRowsFromTheBoardAndClean(board) {
             _board.splice(0, 0, new Array(_config.colums).fill(0));
             completedRows++;
 
-            _score += completedRows;
+            _lines += completedRows;
 
-            document.getElementById('panel-score-value').textContent = _score;
+            document.getElementById('panel-score-value').textContent = _lines;
 
             _config.initialVelocity;
 
-            if (_score % _config.linesStage == 0) {
+            if (_lines % _config.linesStage == 0) {
                 _stage++;
-                document.getElementById('panel-stage-value').textContent = _score;                
+                document.getElementById('panel-stage-value').textContent = _stage;                
                 _velocity -= _config.acceleration;
+                clearInterval(_intervalID);
                 _intervalID = window.setInterval(move, _velocity, 'down');
             }
         }
