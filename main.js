@@ -10,6 +10,7 @@ var _nextPiece;
 var _score = 0;
 var _velocity = _config.initialVelocity;
 var _endGame = false;
+var _stage = 0;
 
 document.getElementById("but-startGame").onclick = startGame;
 document.getElementById("but-up").onclick = function () { action(38); };
@@ -55,6 +56,8 @@ function action(e) {
 }
 
 function move(action) {
+    if (_endGame) return;
+
     movePivot(action, 1);
 
     if (tryMove(_board, _pivotR, _pivotC, _piece)) {
@@ -74,6 +77,10 @@ function move(action) {
     }
 
     if (_endGame) endGame();
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function movePivot(action, sum) {
@@ -187,11 +194,8 @@ function findCompletedRowsFromTheBoardAndClean(board) {
 
     for (let r = 0; r < board.length; r++) {
         if (board[r].every((currentValue) => currentValue < 0)) {
-            console.log(_board)
             _board.splice(r, 1);
-            console.log(_board)
             _board.splice(0, 0, new Array(_config.colums).fill(0));
-            console.log(_board)
             completedRows++;
 
             _score += completedRows;
@@ -200,7 +204,9 @@ function findCompletedRowsFromTheBoardAndClean(board) {
 
             _config.initialVelocity;
 
-            if (_score % 10 == 0) {
+            if (_score % _config.linesStage == 0) {
+                _stage++;
+                document.getElementById('panel-stage-value').textContent = _score;                
                 _velocity -= _config.acceleration;
                 _intervalID = window.setInterval(move, _velocity, 'down');
             }
@@ -210,7 +216,8 @@ function findCompletedRowsFromTheBoardAndClean(board) {
     return completedRows;
 }
 
-function endGame() {
+async function endGame() {
+    await sleep(300);
     clearInterval(_intervalID);
     alert("END GAME");
 }
@@ -267,11 +274,8 @@ function endTouch(e) {
     let diffX = initialX - currentX;
     let diffY = initialY - currentY;
 
-    console.log(Math.abs(diffX) - Math.abs(diffY))
-
     if (Math.abs(diffX) - Math.abs(diffY) < 10) {
         action(38); //touch - rotate
-        console.log("rotete");
     } else if (Math.abs(diffX) > Math.abs(diffY)) {
         if (diffX > 0) {
             action(37); //left

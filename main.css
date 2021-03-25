@@ -94,14 +94,15 @@ table.board {
 
 td.panel {
     font-family: 'Roboto Mono', monospace;
-    font-size: 4vh;
+    font-size: 3vh;
+    text-shadow: 1px 1px gray;
 }
 
-#panel-next-0 #panel-next-1 #panel-next-2 #panel-next-3 #panel-next-4 #panel-next-5 #panel-next-6 #panel-next-7 #panel-next-9 #panel-next-10 #panel-next-11{
+#panel-next-0, #panel-next-1, #panel-next-2, #panel-next-3, #panel-next-4, #panel-next-5, #panel-next-6, #panel-next-7, #panel-next-9, #panel-next-10, #panel-next-11{
     background-color: #f6f6f6;
 }
 
-#panel-score-value {
+#panel-score-value, #panel-stage-value {
     font-size: 3vh;
 }
 
@@ -111,7 +112,7 @@ td {
     line-height: 0px;
 }
 
-button.panel-but {
+button.panel-but {    
     font-size: 3vh;
     background-color: white;
     border: none;
