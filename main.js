@@ -198,7 +198,7 @@ function findCompletedRowsFromTheBoardAndClean(board) {
             _board.splice(0, 0, new Array(_config.colums).fill(0));
             completedRows++;
 
-            _lines += completedRows;
+            _lines++;
 
             document.getElementById('panel-score-value').textContent = _lines;
 
@@ -274,7 +274,7 @@ function endTouch(e) {
 
     let diffX = initialX - currentX;
     let diffY = initialY - currentY;
-    
+
     if (Math.abs(Math.abs(diffX) - Math.abs(diffY)) < 10) {
         action(38); //touch - rotate
     } else if (Math.abs(diffX) > Math.abs(diffY)) {
@@ -285,7 +285,7 @@ function endTouch(e) {
         }
     } else if (Math.abs(diffX) < Math.abs(diffY)) {
         if (diffY > 0) {
-            //up
+            action(38);
         } else {
             action(40); //down
         }
